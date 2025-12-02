@@ -389,7 +389,8 @@ https://github.com/Luchen-0420/Ella-AIPet.git
 
 ## 10.2 作者及联系方式
 
-<img width="1024" height="565" alt="image" src="https://github.com/user-attachments/assets/9c1a2864-68c1-47f2-be8d-125be9c28fa0" />
+<img width="1024" height="565" alt="521165432-9c1a2864-68c1-47f2-be8d-125be9c28fa0" src="https://github.com/user-attachments/assets/496601e9-0c54-4ff0-9d3d-a3749d0e1980" />
+
 
 
 项目职责：
