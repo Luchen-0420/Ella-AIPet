@@ -381,3 +381,37 @@ interval_minutes = 10  # 每10分钟检测一次
 ### 9.5.2 树莓派推理代码
 
 
+# 十、其他
+
+## 10.1 github开源地址
+
+https://github.com/Luchen-0420/Ella-AIPet.git
+
+## 10.2 作者及联系方式
+
+<img width="1024" height="565" alt="image" src="https://github.com/user-attachments/assets/9c1a2864-68c1-47f2-be8d-125be9c28fa0" />
+
+
+项目职责：
+
+1. 端侧图像识别小模型
+2. 后端接口开发
+
+路晨：软件开发工程师
+
+项目职责：
+
+1. 硬件功能开发
+2. 前端开发
+3. 端侧模型部署
+4. 文档编写
+
+期待大佬们的指正与建议，wechat联系方式如下：
+
+沧沧：xingyund33
+
+路晨：HelloWorld_testing
+
+
+
+
