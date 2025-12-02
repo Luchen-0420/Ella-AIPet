@@ -1,8 +1,4 @@
-# Ella-AIPet
-Ella——基于文心一言4.5的AI监督陪伴桌宠
-
-
-
+#【ERNIE 4.5】ella-基于文心4.5的AI学习陪伴桌宠
 
 ![](https://fastly.jsdelivr.net/gh/bucketio/img9@main/2025/11/29/1764405013841-06511dcc-2c2e-4002-af3d-99ab5bc4b511.png)
 
@@ -14,15 +10,17 @@ Ella——基于文心一言4.5的AI监督陪伴桌宠
 ![](https://fastly.jsdelivr.net/gh/bucketio/img19@main/2025/11/30/1764459416057-441862c1-08ec-470e-8325-4dff7e3879d7.png)
 ![](https://fastly.jsdelivr.net/gh/bucketio/img15@main/2025/11/30/1764459502291-4da1489c-1c6b-4b41-90a6-d7acdb84f523.png)
 
+
 # 二、实现原理与技术架构
 
 ## 2.1 系统总体软件架构
 ![](https://fastly.jsdelivr.net/gh/bucketio/img18@main/2025/11/30/1764515504610-41bf3a8c-d275-429d-8c79-81fcbf3688cc.png)
 
+## 2.2 系统总体流程
 
-## 2.2 核心技术栈
+
+## 2.3 核心技术栈
 ![](https://fastly.jsdelivr.net/gh/bucketio/img15@main/2025/11/30/1764515976670-eeb80ccc-92f5-409a-81f8-eed2ed1a6599.png)
-
 
 # 三、硬件方案说明
 
@@ -59,4 +57,327 @@ Ella——基于文心一言4.5的AI监督陪伴桌宠
 ![](https://fastly.jsdelivr.net/gh/bucketio/img18@main/2025/11/30/1764516557824-6458fc35-d18c-4465-9a63-08827747182a.png)
 ![](https://fastly.jsdelivr.net/gh/bucketio/img8@main/2025/11/30/1764516614497-89327e03-4975-43db-8c8e-5b596c00a7b7.png)
 
-# 八、相关代码
+
+# 七、使用说明
+
+# 八、环境配置
+
+## 8.1 软件
+
+需要安装node和
+
+## 8.2 硬件
+
+### 8.2.1 树莓派ap配网
+
+### 8.2.2 树莓派安装pandle lite
+
+下载inference_lite_lib.armlinux.armv8.gcc.with_extra.with_cv包至树莓派。
+### cmake文件
+``` cpp
+cmake_minimum_required(VERSION 3.10)
+project(infer_ella C CXX)
+
+set(CMAKE_CXX_STANDARD 11)
+
+# Paddle Lite 路径
+set(PADDLE_LITE_DIR /home/pi/demo/inference_lite_lib.armlinux.armv8.gcc.with_extra.with_cv)
+
+# 头文件
+include_directories(
+    ${PADDLE_LITE_DIR}/cxx/include
+)
+
+# Paddle Lite 静态库
+set(PADDLE_LITE_LIB
+    ${PADDLE_LITE_DIR}/cxx/lib/libpaddle_light_api_shared.so
+)
+
+# OpenCV
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+# 构建 infer_ella
+add_executable(infer_ella infer_ella.cpp)
+
+target_link_libraries(infer_ella
+    ${PADDLE_LITE_LIB}
+    ${OpenCV_LIBS}
+)
+```
+
+# 九、相关代码
+
+
+## 9.1  人物追踪
+
+📋 **前提条件**
+
+1. Python 3.6+ 已安装
+
+2. 有一个可用的摄像头
+
+3. 确保摄像头未被其他程序占用
+
+### 9.1.1 功能描述
+
+当用户不在“视线”范围内，设备通过旋转车轮和镜头旋转的方式捕捉人物。
+
+### 9.1.2 定时人物检测
+
+#### 🔧 步骤1: 安装依赖
+
+打开终端，运行：
+
+```bash
+# 安装OpenCV和其他依赖
+pip install opencv-python opencv-contrib-python requests numpy
+
+# 如果要运行测试服务器，还需要安装Flask
+pip install flask
+```
+
+#### 🧪 步骤2: 测试摄像头和检测功能
+
+运行测试脚本确保一切正常：
+
+```bash
+python test_detection.py
+```
+
+这个脚本会：
+- ✅ 测试摄像头是否能正常打开
+- ✅ 测试人物检测算法是否工作
+- ✅ 实时显示检测效果
+
+**提示**: 在测试窗口中，按 `q` 退出，按 `s` 保存当前帧。
+
+### 🖥️ 步骤3: 启动服务器（测试用）
+
+**如果你还没有服务器**，可以先用我们提供的测试服务器：
+
+```bash
+python simple_server.py
+```
+
+服务器会在 `http://localhost:8000` 启动。
+
+你会看到类似输出：
+```
+图片保存目录: D:\安装\turbopi_ros2\received_images
+服务器地址:
+  - 本地: http://127.0.0.1:8000
+  - 局域网: http://<你的IP地址>:8000
+```
+
+**保持这个终端窗口运行！**
+
+#### ⚙️ 步骤4: 配置客户端
+
+编辑 `periodic_person_detection_example.py`，修改服务器地址：
+
+```python
+api_config = {
+    'url': 'http://127.0.0.1:8000/api/upload',  # 如果是本地测试
+    # 或者
+    # 'url': 'http://192.168.1.100:8000/api/upload',  # 如果服务器在其他机器
+    'method': 'POST',
+    'headers': {
+        'Content-Type': 'application/json',
+    },
+    'image_format': 'base64',
+    'image_key': 'image',
+    'timeout': 30
+}
+
+# 配置检测间隔
+interval_minutes = 5  # 每5分钟检测一次
+camera_index = 0      # 使用第一个摄像头
+```
+
+#### 🚀 步骤5: 启动定时检测
+
+**打开一个新的终端窗口**，运行：
+
+```bash
+python periodic_person_detection_example.py
+```
+
+程序会先询问是否进行测试检测：
+```
+是否先进行一次测试检测? (y/n): y
+```
+
+输入 `y` 并回车，确认一切正常后，定时检测将自动启动。
+
+#### 📊 步骤6: 查看结果
+
+#### 在客户端（检测端）：
+
+你会看到类似输出：
+```
+[2024-11-23 14:30:25] 开始人物检测...
+✓ 检测到人物! (检测框数量: 2)
+图片已保存: detected_person_20241123_143025.jpg
+✓ 图片上传成功!
+服务器响应: {"success": true, "message": "图片上传成功"...}
+摄像头已关闭
+
+等待 5 分钟后进行下一次检测...
+```
+
+#### 在服务器端：
+
+你会看到类似输出：
+```
+[2024-11-23 14:30:25] 收到新请求
+查询: 图片中检测到了人物，请分析图片内容
+时间戳: 20241123_143025
+检测数量: 2
+✓ 图片已保存: received_images/received_20241123_143025.jpg
+  大小: 123456 字节
+✓ 元数据已保存: received_images/received_20241123_143025.json
+```
+
+#### 查看保存的图片：
+
+- **客户端**: 查看 `detected_person_*.jpg` 文件
+- **服务器**: 查看 `received_images/received_*.jpg` 文件
+
+#### 🛑 停止程序
+
+在两个终端窗口中按 `Ctrl+C` 即可停止程序。
+
+---
+
+### 🎯 完整工作流程图
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    每5分钟自动执行                        │
+└─────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+                 ┌────────────────────┐
+                 │   打开摄像头        │
+                 └────────────────────┘
+                            │
+                            ▼
+                 ┌────────────────────┐
+                 │  读取图像帧         │
+                 └────────────────────┘
+                            │
+                            ▼
+                 ┌────────────────────┐
+                 │  人物检测算法       │
+                 │  - 人脸检测         │
+                 │  - 全身检测         │
+                 └────────────────────┘
+                            │
+                ┌───────────┴───────────┐
+                │                       │
+                ▼                       ▼
+        ┌──────────────┐      ┌──────────────┐
+        │ 检测到人物    │      │ 未检测到     │
+        └──────────────┘      └──────────────┘
+                │                       │
+                ▼                       ▼
+        ┌──────────────┐      ┌──────────────┐
+        │ 拍照并标注    │      │ 关闭摄像头   │
+        └──────────────┘      └──────────────┘
+                │                       │
+                ▼                       │
+        ┌──────────────┐               │
+        │ 保存到本地    │               │
+        └──────────────┘               │
+                │                       │
+                ▼                       │
+        ┌──────────────┐               │
+        │ 上传到服务器  │               │
+        └──────────────┘               │
+                │                       │
+                ▼                       │
+        ┌──────────────┐               │
+        │ 关闭摄像头    │               │
+        └──────────────┘               │
+                │                       │
+                └───────────┬───────────┘
+                            │
+                            ▼
+                 ┌────────────────────┐
+                 │  等待5分钟         │
+                 └────────────────────┘
+                            │
+                            ▼
+                      (重复循环)
+```
+
+---
+
+### 📝 配置自己的服务器
+
+如果你想使用自己的服务器，只需修改 `api_config` 中的 `url`：
+
+```python
+api_config = {
+    'url': 'http://your-server.com/api/upload',
+    'method': 'POST',
+    'headers': {
+        'Content-Type': 'application/json',
+        'X-API-Key': 'your-api-key'  # 如果需要认证
+    }
+}
+```
+
+你的服务器需要：
+1. 接收POST请求到 `/api/upload`
+2. 请求body格式为JSON，包含base64编码的图片
+3. 返回JSON格式的响应
+
+详细的服务器接口要求请查看 `PERIODIC_DETECTION_README.md`。
+
+---
+
+### ❓ 常见问题
+
+#### Q: 检测不到人物怎么办？
+**A**: 
+1. 确保光线充足
+2. 人物正面朝向摄像头
+3. 在测试窗口中调整位置和距离
+4. 查看 `PERIODIC_DETECTION_README.md` 了解如何调整检测参数
+
+#### Q: 可以改变检测间隔吗？
+**A**: 可以！修改 `interval_minutes` 参数：
+```python
+interval_minutes = 1  # 每1分钟检测一次
+interval_minutes = 10  # 每10分钟检测一次
+```
+
+
+
+## 9.2 端侧部署姿势识别小模型
+
+下载models文件夹内ella_model_v1.nb模型至树莓派。
+
+### 1.模型调用
+
+
+``` cpp
+
+
+```
+
+## 9.3 前端项目代码
+
+
+## 9.4 后端接口代码
+
+
+## 9.5 PP-TTS语音合成
+
+### 9.5.1 训练
+
+### 9.5.2 树莓派推理代码
+
+
