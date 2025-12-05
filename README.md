@@ -31,8 +31,8 @@
 
 # 三、项目职责及联系方式
 
-![](https://fastly.jsdelivr.net/gh/bucketio/img11@main/2025/12/02/1764678441795-2c7fa404-cffd-4056-a111-8d05522514c9.png)
-![](https://fastly.jsdelivr.net/gh/bucketio/img16@main/2025/12/02/1764674721228-641c1059-bd3c-4118-ae03-4a6f298007c0.png)
+![](https://github.com/Luchen-0420/Ella-AIPet/blob/main/imgs/13.png?raw=true)
+![](https://github.com/Luchen-0420/Ella-AIPet/blob/main/imgs/14.png?raw=true)
 ![](https://fastly.jsdelivr.net/gh/bucketio/img12@main/2025/12/02/1764675383183-8b060744-2652-413e-9a80-4b46424510ec.png)
 ![](https://fastly.jsdelivr.net/gh/bucketio/img19@main/2025/12/02/1764675871365-37210279-f12d-45d5-ae41-6811a2d81005.png)
 ![](https://fastly.jsdelivr.net/gh/bucketio/img14@main/2025/12/02/1764675659866-366862e6-3e50-42e0-93df-5d16b0b88281.png)
