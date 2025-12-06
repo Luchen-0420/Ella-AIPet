@@ -1,3 +1,8 @@
+
+目前在飞桨平台更新的版本比较新，github还未来得及整理。
+
+飞桨平台项目地址：https://aistudio.baidu.com/projectdetail/9644212?sUid=2713093&shared=1&ts=1765008681388
+
 # 一、项目介绍
 ![](https://fastly.jsdelivr.net/gh/bucketio/img12@main/2025/12/05/1764906353097-30c30597-3ced-4123-816a-63b76e5c59ad.png)
 ![](https://fastly.jsdelivr.net/gh/bucketio/img16@main/2025/12/05/1764906337938-4f0cec1d-49eb-4135-889d-f0ffb352c4b4.png)
@@ -40,3 +45,4 @@
 ![](https://github.com/Luchen-0420/Ella-AIPet/blob/main/imgs/19.png?raw=true)
 ![](https://github.com/Luchen-0420/Ella-AIPet/blob/main/imgs/20.png?raw=true)
 ![](https://github.com/Luchen-0420/Ella-AIPet/blob/main/imgs/21.png?raw=true)
+
